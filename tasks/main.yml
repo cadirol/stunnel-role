@@ -11,7 +11,6 @@
     name: openssl
     update_cache: yes
   register: install_ssl_backend
-  when: stunnel_install_ssl_backend
 
 - name: Install package
   package:
@@ -19,10 +18,10 @@
     force: yes
   register: install_stunnel_4
 
-- include: certificate.yml
+- include_tasks: certificate.yml
   when: stunnel_use_certificate | bool
 
-- include: psk.yml
+- include_tasks: psk.yml
   when: stunnel_use_psk | bool
 
 - name: Stunnel configuration

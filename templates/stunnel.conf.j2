@@ -1,22 +1,33 @@
-pid = {{ stunnel_pid }}
-output = {{ stunnel_output }}
+###################################
+# {{ ansible_managed }} 
+###################################
+
+chroot = /var/run/stunnel4
+pid = /stunnel.pid
+
+setuid = stunnel4
+setgid = stunnel4
+
+;output = /var/log/stunnel.log
+debug = info
+
+options = NO_SSLv2
+options = NO_SSLv3
 
 {% if stunnel_use_certificate %}
-cert = /etc/stunnel/stunnel.pem
-{% endif -%}
+; Certificate signed for {{stunnel_certificate_domain}}
+cert={{stunnel_certificate_pem_file}}
+{% endif %}
 
 {% for service in stunnel_services %}
 [{{service.name}}]
-{% if service.client | default(false) %}
-  client = yes
-{% endif %}
-{% if ( stunnel_use_psk or service.use_psk ) and service.PSKidentity | default(false) %}
-  PSKidentity = {{ service.PSKidentity }}
-{% endif %}
-  accept = {{ service.accept }}
-  connect = {{ service.connect }}
-{% if stunnel_use_psk or service.use_psk %}
+  accept = {{service.accept}}
+  connect = {{service.connect}}
+{% if stunnel_use_psk %}
   ciphers = PSK
   PSKsecrets = /etc/stunnel/psk.txt
+{% endif %}
+{% if service.client | default(false) %}
+  client = yes
 {% endif %}
 {% endfor %}

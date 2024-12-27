@@ -1,17 +1,15 @@
 ---
-stunnel_install_ssl_backend: false
-stunnel_use_certificate: true
-stunnel_use_psk: false
+stunnel_use_certificate: True
+stunnel_use_psk: False
 stunnel_certificate_generation: False
-stunnel_certificate_duration: 365
+stunnel_certificate_duration: 3650
 stunnel_certificate_domain: www.domain.com
-stunnel_certificate_country: FR
+stunnel_certificate_country: CH
 stunnel_certificate_organization: organization
 stunnel_certificate_state_name: state
 stunnel_certificate_locality: locality
 stunnel_certificate_file: /tmp/certificate.pem
 stunnel_key_file: /tmp/key.pem
+stunnel_certificate_pem_file: /etc/stunnel/stunnel.pem
 stunnel_services: []
 stunnel_psks: []
-stunnel_pid: /var/run/stunnel.pid
-stunnel_output: /var/log/stunnel.log
